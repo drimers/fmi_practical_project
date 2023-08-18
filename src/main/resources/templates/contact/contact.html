@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="~{common/header :: homeNavbar}"></div>
+<!-- contact section starts here -->
+<section class="contact">
+    <div class="container-fluid">
+        <div class="bg-image">
+            <div class="item"
+                 style="background-image: url('/img/slide-one.jpg') ; height: 100vh;   background-position: center; background-size: cover;">
+                <div class="row">
+                    <div class="contact-caption clearfix">
+                        <div class="col-md-5 contact-info text-left offset-md-1">
+                            <h2>Contact information:</h2>
+                            <div class="info-detail">
+                                <ul>
+                                    <li><i class="fa fa-calendar"></i><span>Monday - Friday:</span> 9:30 AM to 6:30 PM
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li><i class="fa fa-map-marker"></i><span>Address:</span> Sofia</li>
+                                </ul>
+                                <ul>
+                                    <li><i class="fa fa-phone"></i><span>Phone:</span> (02) 987-1235</li>
+                                </ul>
+                                <ul>
+                                    <li><i class="fa fa-fax"></i><span>Fax:</span> (02) 984-1234</li>
+                                </ul>
+                                <ul>
+                                    <li><i class="fa fa-envelope"></i><span>Email:</span> info@doctor.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row offset-md-1">
+                    <div class="col-md-3 contact-form">
+                        <div>
+                            <h2>Leave us a message:</h2>
+                        </div>
+                        <div th:if="${param.error}">
+                            <div class="alert alert-danger">Invalid parameters</div>
+                        </div>
+                        <div th:if="${param.success}">
+                            <div class="alert alert-info">
+                                You have successfully sent a message!!!
+                            </div>
+                        </div>
+
+                        <form class="form-floating " th:object="${contact}"
+                              th:action="@{/saveContactForm}" method="post">
+                            <div class="form-group">
+                                <div>
+                                    <input class="form-control" name="name" type="text" id="contactName"
+                                           th:field="${contact.contactName}" placeholder="Name">
+                                    <p th:if="${#fields.hasErrors('contactName')}" th:errors="*{contactName}"
+                                       class="text-danger"></p>
+                                </div>
+                                <div>
+                                    <input class="form-control" name="email" type="email" id="contactEmail"
+                                           th:field="${contact.contactEmail}" placeholder="Email">
+                                    <p th:if="${#fields.hasErrors('contactEmail')}" th:errors="*{contactEmail}"
+                                       class="text-danger"></p>
+                                </div>
+                                <div>
+                                    <input class="form-control" name="phone" type="text" id="contactPhone"
+                                           th:field="${contact.contactPhone}" placeholder="Phone No:">
+                                    <p th:if="${#fields.hasErrors('contactPhone')}" th:errors="*{contactPhone}"
+                                       class="text-danger"></p>
+                                </div>
+                                <div>
+                                    <textarea class="form-control" name="message" id="contactMessage"
+                                              th:field="${contact.contactMessage}" placeholder="Message">
+                                    </textarea>
+                                    <p th:if="${#fields.hasErrors('contactMessage')}" th:errors="*{contactMessage}"
+                                       class="text-danger"></p>
+                                </div>
+                                <div class="form-row d-md-flex justify-content-md-end">
+                                    <button class="btn btn-secondary" type="submit">Send</button>
+                                    <!--<input class="btn btn-secondary" type="submit" value="SUBMIT">-->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- end of contact section -->
+<div>
+    </br></br>
+</div>
+
+<div th:insert="~{common/footer :: footer}"></div>
+
+<!--<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>-->
+<!--<script>-->
+<!--    ClassicEditor-->
+<!--        .create(document.querySelector('#contactMessage'))-->
+<!--        .then(editor => {-->
+<!--            console.log(editor);-->
+<!--        })-->
+<!--        .catch(error => {-->
+<!--            console.error(error);-->
+<!--        });-->
+<!--</script>-->
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:fragment="homeHeader">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title th:text="#{home.page.title}">MEDICAL</title>
+
+
+    <link href="../static/css/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet" media="screen"
+          th:href="@{/css/bootstrap-5.0.2-dist/css/bootstrap.min.css}"/>
+
+    <script src="..static/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" media="screen"
+            th:src="@{/css/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js}"/>
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<header th:fragment="homeNavbar" class="top-header">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #e3f2fd;">
+        <a href="home"><img src="../img/logo.png" alt="" class="img-responsive logo"></a>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Medical</a>
+            <button class="navbar-toggle" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggle-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/home}"><b>Home</b></a>
+                    </li>
+                    <div sec:authorize="isAuthenticated()">
+                        <div sec:authorize="hasAnyRole('ROLE_PATIENT','ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/patient}"><b>Patient</b></a>
+                            </li>
+                        </div>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <div sec:authorize="hasAnyRole('ROLE_DOCTOR','ROLE_ADMIN')">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/doctor}"><b>Doctor</b></a>
+                            </li>
+                        </div>
+                    </div>
+                    <li class="nav-item">
+                        <a sec:authorize="isAnonymous()" class="nav-link" th:href="@{/register}"><b>Register</b></a>
+                    </li>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/admin}"><strong>Admin</strong></a>
+                        </li>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contact}"><strong>Contact</strong></a>
+                    </li>
+                </ul>
+
+
+                <form class="d-flex mx-2">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input sec:authorize="isAnonymous()" class="mx-2" type="button" id="button_login"
+                           onclick="location.href='/login';"
+                           value="login"/>
+                    <!--                    <input sec:authorize="isAuthenticated()" class="mx-2" type="button" id="button_logout"-->
+                    <!--                           onclick="location.href='/logout';"-->
+                    <!--                           value="logout"/>-->
+
+                </form>
+
+                <form sec:authorize="isAuthenticated()" class="d-flex mx-2" th:action="@{/patientEditForm}"
+                      method="post">
+                    <span class="form-control btn btn-warning">
+                        <div>
+                            <p>Welcome, <br/><span sec:authentication="name"> </span></p>
+                        </div>
+                        </span>
+                    <div class="btn-group dropdown dropstart">
+                        <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <img th:src="@{../img/logo1.png}" alt="" style="width:50px;" class="rounded-pill">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                            <li><a sec:authorize="hasAnyRole('ROLE_PATIENT','ROLE_ADMIN')" class="dropdown-item"
+                                   th:href="@{/patientEditForm}">Profile</a>
+                                <!--                                   th:href="@{/patientEditForm(patientID=*{appointments[0].patientId})}">Profile</a>-->
+                            </li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" th:href='logout'>Logout</a></li>
+                        </ul>
+                    </div>
+
+                    <!--                    <a class="btn btn-outline-success"-->
+                    <!--                       th:href="@{/patientEditForm(patientID=*{appointments[0].patientId})}" id="id"-->
+                    <!--                       type="submit"><b>edit</br> account</b></a>-->
+                    <!--                    <a class="btn btn-outline-success"-->
+                    <!--                       th:href="@{/deletePatientAccount(patientID=*{appointments[0].patientId})}" id="patientID"-->
+                    <!--                       type="submit"><b>delete </br> account</b></a>-->
+                    <!--                    </tr>-->
+
+                </form>
+
+            </div>
+        </div>
+
+    </nav>
+
+
+</header> <!-- end of header area -->
+
+</body>
+</html>

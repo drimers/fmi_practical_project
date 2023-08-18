@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>MEDICAL - Responsive HTML &amp; Bootstrap Template</title>
+    <link href="assets/css/registerForm.css" rel="stylesheet">
+    <![endif]-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+</head>
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="patient" type="com.stefanpetkov.medical.commands.PatientCommand"*/-->
+
+
+<form th:object="${patient}" th:action="@{/saveEditPatient}" method="post">
+    <!-- class named "container" is assigned to div -->
+    <div class="container">
+        <h1>Edit Form</h1>
+
+        <input type="hidden" th:field="${patient.patientId}">
+        <label for="firstName"><b>First Name</b></label>
+        <input
+                type="text"
+                placeholder="Enter First Name"
+                name="username"
+                id="firstName"
+                th:field="${patient.firstName}"
+                required
+        />
+
+        <label for="LastName"><b>Last Name</b></label>
+        <input
+                type="text"
+                placeholder="Enter Last Name"
+                name="LastName"
+                id="LastName"
+                th:field="${patient.lastName}"
+                required
+        />
+
+        <label for="phone"><b>Phone</b></label>
+        <input
+                type="text"
+                placeholder="Enter Phone Number"
+                name="phone"
+                id="phone"
+                th:field="${patient.phone}"
+                required
+        />
+
+        <!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        https://www.w3schools.com/tags/att_input_pattern.asp -->
+        <label for="email"><b>Email</b></label>
+        <input class="form-control"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+               type="email"
+               placeholder="name@example.com"
+               name="email"
+               id="email"
+               th:field="${patient.email}"
+               required
+        />
+
+        <label for="pwd"><b>Password</b></label>
+        <input
+                type="text"
+                placeholder="Enter Password"
+                name="pwd"
+                id="pwd"
+                th:field="${patient.password}"
+                required
+        />
+
+        <label for="comment"><b>Comment</b></label>
+        <textarea class="form-control" id="comment" th:field="${patient.comment}" rows="3"></textarea>
+
+        <button type="submit">Save</button>
+    </div>
+
+    <div>
+        <p>Already have an account? <a href="/login">Log in</a>.</p>
+    </div>
+</form>
+<script type="text/javascript">
+    const pwd = Math.random().toString();
+    document.getElementById("pwd").innerText = pwd;
+</script>
+
+
+</body>
+</html>

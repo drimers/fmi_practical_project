@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="appointments" type="com.stefanpetkov.medical.commands.AppointmentCommand"*/-->
+<div th:replace="~{common/header :: homeNavbar}"></div>
+
+
+<div>
+    </br></br>
+</div>
+
+<div class="text-center" th:if="${param.saveAppointment}">
+    <div class="alert alert-info">
+        You have successfully booked an appointment!!!
+    </div>
+</div>
+<div class="text-center" th:if="${param.modified}">
+    <div class="alert alert-info">
+        Successfully modified your profile!!!
+    </div>
+</div>
+
+
+
+<div class="row">
+
+    <div class="col-md-8 border-1 border-dark">
+        <div class="display-6 -bold text-center text-warning bg-secondary">
+            <label><strong> Appointments </strong></label>
+        </div>
+
+        <table class="table table-striped table-bordered table-hover border-dark">
+            <thead class="table-dark text-center">
+            <th>#</th>
+            <th>Patient_ID</th>
+            <th>Doctor's FullName</th>
+            <th>Appointment</th>
+            <th>Phone</th>
+            <th>Update</th>
+            <th>Delete</th>
+            </thead>
+            <tbody class="border border-3 border-dark text-center" th:each="appointment, appointmentNumber : ${appointments}">
+            <td th:text="*{appointmentNumber.count}">No</td>
+            <td th:text="*{appointment.patientId}">id</td>
+            <td th:text="d-r + ' ' + *{appointment.doctorFirstName} + ' ' + *{appointment.doctorLastName}">FullName</td>
+            <td th:text="*{#temporals.format(appointment.dateTimeOfTheAppointment, 'dd-MMM-yyyy hh:mm')}">phone</td>
+            <td th:text="*{appointment.doctorPhoneNumber}">phone</td>
+
+
+            <td class="col-1 mt-5">
+                <a class="btn btn-outline-success"
+                   th:href="@{/updateAppointmentForm(appointment_id=*{appointment.appointmentId})}" id="btn_update"
+                   type="submit"><b>Update</b></a>
+            </td>
+            <td class="col-1 mt-5">
+                <a class="btn btn-outline-success"
+                   th:href="@{/deleteAppointment(appointment_id=*{appointment.appointmentId})}" id="btn_delete"
+                   type="submit"><b>Delete</b></a>
+            </td>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4 border-1 border-dark ">
+        <form class="card" th:action="@{/search}" method="get">
+            <div class="card-header form-control text-center">
+                <h3><b> &nbsp;Appointment Search: </b></h3></br>
+            </div>
+            <div class="card-body">
+                <input class="col-md-10 border border-1 border-dark " type="text" name="keyword"
+                       th:value="${keyword}"
+                       placeholder="Find by FirstName or Appointment date">
+                <button type="submit" class="btn btn-info "><b>Search</b></button>
+                <a type="button" class="form-control btn btn-warning" href="/addAppointment"><strong>Make
+                    Appointment</strong></a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    </br></br>
+</div>
+
+<!-- footer starts here -->
+<div th:insert="~{common/footer :: footer}"></div>
+
+
+<script>
+
+    // Below code sets format to the
+    // datetimepicker having id as
+    // datetime
+    // $('#datetime').datetimepicker({
+    //     format: 'DD-MM-YYYY HH:mm:ss'
+    // });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="~{common/header :: homeNavbar}"></div>
+<!--/*@thymeleaf id="patient" type="com.stefanpetkov.medical.commands.PatientCommand"*/-->
+<!--<div th:replace="~{common/header :: homeNavbar}"></div>-->
+<div>
+    </br>
+</div>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+
+                <form class="card-body" th:object="${patient}" th:action="@{/save}" method="post">
+
+                    <!-- class named "container" is assigned to div -->
+<!--                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">-->
+<!--                        <p th:text="#{patient.hasErrors}">Error Message</p>-->
+<!--                    </div>-->
+
+                    <div class="container">
+                        <h3 class="text-center">Register Form</h3>
+                        <div class="form-group mb-3">
+                            <label for="firstName"><b>First Name</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter First Name"
+                                    name="username"
+                                    id="firstName"
+                                    th:field="${patient.firstName}"
+
+                            />
+                            <p th:if="${#fields.hasErrors('firstName')}" class="alert alert-danger"
+                               th:errors="${patient.firstName}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="LastName"><b>Last Name</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Last Name"
+                                    name="LastName"
+                                    id="LastName"
+                                    th:field="${patient.lastName}"
+
+                            />
+                            <p th:if="${#fields.hasErrors('lastName')}" class="alert alert-danger"
+                               th:errors="${patient.lastName}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone"><b>Phone</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Phone Number"
+                                    name="phone"
+                                    id="phone"
+                                    th:field="${patient.phone}"
+
+                            />
+                            <p th:if="${#fields.hasErrors('phone')}" class="alert alert-danger"
+                               th:errors="${patient.phone}"></p>
+                        </div>
+
+                        <!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        https://www.w3schools.com/tags/att_input_pattern.asp -->
+                        <div class="form-group mb-3">
+                            <label for="email"><b>Email</b></label>
+                            <input class="form-control"
+                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                   type="email"
+                                   placeholder="name@example.com"
+                                   name="email"
+                                   id="email"
+                                   th:field="${patient.email}"
+
+                            />
+                            <p th:if="${#fields.hasErrors('email')}" class="alert alert-danger"
+                               th:errors="${patient.email}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="pwd"><b>Password</b></label>
+                            <input
+                                    class="form-control"
+                                    type="password"
+                                    placeholder="Enter Password"
+                                    name="pwd"
+                                    id="pwd"
+                                    th:field="${patient.password}"
+
+                            />
+                            <p th:if="${#fields.hasErrors('password')}" class="alert alert-danger"
+                               th:errors="${patient.password}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="comment"><b>Comment</b></label>
+                            <textarea class="form-control" id="comment" th:field="${patient.comment}"
+                                      rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <button type="submit">Save</button>
+                        </div>
+
+                        <div class="text-center">
+                            <p>Already have an account? <a href="/login">Log in</a>.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+</br></br>
+</div>
+<div th:replace="~{common/footer :: footer}"></div>
+
+<script type="text/javascript">
+    const pwd = Math.random().toString();
+    document.getElementById("pwd").innerText = pwd;
+</script>
+
+
+</body>
+</html>

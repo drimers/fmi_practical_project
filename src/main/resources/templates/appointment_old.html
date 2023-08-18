@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="appointment" type="com.stefanpetkov.medical.commands.AppointmentCommand"*/-->
+<div th:replace="~{common/header :: homeNavbar}"></div>
+
+<div sec:authorize="isAuthenticated()">
+
+    <div class="row">
+        <div class="display-6 -bold text-center text-warning bg-secondary">
+            <label><strong> Appointment Form </strong></label>
+        </div>
+    </div>
+    </br></br>
+
+    <div class="container">
+
+        <div class="col-md-12 border-1 border-dark ">
+            <form class="card" th:action="@{/searchDoctorWorkingDays}" method="get">
+                <div class="card-header form-control text-center">
+                    <h3><b> &nbsp;Search Doctor working days: </b></h3></br>
+                </div>
+                <div class="card-body">
+                    <input class="col-md-10 border border-1 border-dark " type="text" name="keyword"
+                           th:value="${keyword}"
+                           placeholder="Find by FirstName or Speciality">
+                    <button type="submit" class="btn btn-info "><b>Search</b></button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <form class="card border border-dark border-2" th:object="${appointment}"
+                      th:action="@{/saveAppointment}" method="post">
+                    <!--                <div class="col-md-4">-->
+                    <div class="card-header text-center">
+                        <h3><b> &nbsp;&nbsp; Doctors Name:</b></h3>
+                    </div>
+                    </br></br>
+
+                    <select class="card-body" name="id">
+                        <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
+                                th:text="'ЕИК:' + '' + ${doctor.uniqueID} + '  |  ' + ${doctor.firstName} + ' ' + ${doctor.lastName} + '  |  Specialty: '  + ${doctor.specialty}"></option>
+                    </select>
+                    </br></br>
+                    <!--                </div>-->
+
+                    <!--                <div class="col-md-2">-->
+                    <div class="card-header">
+                        <h3 for="datetime" class="card-header text-center"><b> &nbsp; Time:</b></h3>
+                    </div>
+                    </br>
+
+                    <div>
+                        <input class="w-100 p-3 card-body" type="datetime-local" name="date"
+                               data-date-format="DD-MM-YYYY HH:mm"
+                               id="datetime" placeholder="Select time:"
+                               th:value="${appointment.dateTimeOfTheAppointment}"/>
+                    </div>
+                    </br>
+                    <!--         <input  class="form-control" type="text" id="datetime" data-date-format="DD-MM-YYYY HH:mm:ss" placeholder="Select time:"/>-->
+                    <div class="text-center">
+                        <button class="btn btn-outline-success btn-lg" id="btn_save" type="submit"><b>Save</b></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer starts here -->
+<div th:insert="~{common/footer :: footer}"></div>
+
+
+<script>
+
+    // Below code sets format to the
+    // datetimepicker having id as
+    // datetime
+    // $('#datetime').datetimepicker({
+    //     format: 'DD-MM-YYYY HH:mm:ss'
+    // });
+</script>
+
+</body>
+</html>

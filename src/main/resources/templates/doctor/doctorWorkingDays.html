@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="appointment" type="com.stefanpetkov.medical.commands.AppointmentCommand"*/-->
+<div th:replace="~{common/header :: homeNavbar}"></div>
+
+<div sec:authorize="isAuthenticated()">
+
+    <div class="row">
+        <div class="display-6 -bold text-center text-warning bg-secondary">
+            <label><strong> Working days form </strong></label>
+        </div>
+    </div>
+    </br></br>
+
+    <div class="row">
+        <div class="col-md-4 offset-4">
+            <form class="card border border-dark border-2" th:object="${workingDays}"
+                  th:action="@{/doctor/saveWorkingDays}" method="post">
+               </br></br>
+
+                <div class="card-header text-center">
+                    <h3><b> &nbsp;&nbsp; Start date and hour :</b></h3>
+                </div>
+                <div>
+                    <input class="w-100 p-3 card-body" type="datetime-local" name="datetime_start"
+                           data-date-format="DD-MM-YYYY HH:mm"
+                           id="datetime_start" placeholder="Select time:"
+                           th:field="${workingDays.startTimeOpeningHour}"/>
+                </div>
+                <div class="card-header text-center">
+                    <h3><b> &nbsp;&nbsp; End date and hour :</b></h3>
+                </div>
+                <div>
+                    <input class="w-100 p-3 card-body" type="datetime-local" name="datetime_end"
+                           data-date-format="DD-MM-YYYY HH:mm"
+                           id="datetime_end" placeholder="Select time:"
+                           th:field="${workingDays.endTimeOfWorkingHour}"/>
+                </div>
+                <div class="card-header text-center">
+                    <h3><b> &nbsp;&nbsp; Exam duration in minutes :</b></h3>
+                </div>
+                <div>
+                    <input class="w-100 p-3 card-body" type="text" name="duration"
+                           id="duration" placeholder="Time in minutes:"
+                           th:field="${workingDays.examDuration}"/>
+                </div>
+                </br>
+                <!--         <input  class="form-control" type="text" id="datetime" data-date-format="DD-MM-YYYY HH:mm:ss" placeholder="Select time:"/>-->
+                <div class="text-center">
+
+                    <button class="btn btn-outline-success btn-lg" id="btn_save" type="submit"><b>Save</b></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer starts here -->
+<div th:insert="~{common/footer :: footer}"></div>
+
+
+<script>
+
+    // Below code sets format to the
+    // datetimepicker having id as
+    // datetime
+    // $('#datetime').datetimepicker({
+    //     format: 'DD-MM-YYYY HH:mm:ss'
+    // });
+</script>
+
+</body>
+</html>

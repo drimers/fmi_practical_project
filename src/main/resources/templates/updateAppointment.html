@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+
+
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="appointment" type="com.stefanpetkov.medical.commands.AppointmentCommand"*/-->
+<div th:replace="~{common/header :: homeNavbar}"></div>
+<label class="form-label display-6 -bold text-center text-warning bg-secondary"><strong> Update Appointment
+    Form </strong></label>
+
+<form class="border border-dark border-2  padding-bottom pb-3 mb-5 ml-5 mr-5 offset-md-2" style="width: 70%;" th:object="${appointment}"
+      th:action="@{/updateAppointment}" method="post">
+
+    <div class="row g-3">
+                <div class="col">
+        <!--            <label class="form-label"><b> &nbsp;&nbsp; Appointment ID:</b></label>-->
+                    <input type="hidden" class="form-control" placeholder="Appointment ID:" th:field="*{appointmentId}"/>
+                </div>
+
+                <div class="col">
+        <!--            <label class="form-label"><b> &nbsp;&nbsp; Doctor ID:</b></label>-->
+                    <input type="hidden" class="form-control" placeholder="Doctor ID:" th:field="*{doctorId}"/>
+                </div>
+
+
+
+        <div class="col-3">
+            <label class="form-label"><b> &nbsp First Name:</b></label>
+            <input type="text" class="form-control" th:field="*{doctorFirstName}"/>
+        </div>
+
+        <div class="col-3">
+            <label class="form-label"><b> &nbsp; Last Name:</b></label>
+            <input type="text" class="form-control" placeholder="Last name" th:field="*{doctorLastName}"/>
+        </div>
+
+        <div class="col-4">
+            <label for="datetime" class="form-label"><b> &nbsp; Time:</b></label>
+            <input type="datetime-local" data-date-format="DD-MM-YYYY HH:mm" class="form-control" id="datetime"
+                   placeholder="Select time:"
+                   th:field="*{dateTimeOfTheAppointment}"/>
+            <!--         <input  class="form-control" type="text" id="datetime" data-date-format="DD-MM-YYYY HH:mm:ss" placeholder="Select time:"/>-->
+        </div>
+
+        <div class="col-1 mt-5">
+            <button class="btn btn-outline-success form-control" id="btn_save" type="submit"><b>Save</b></button>
+        </div>
+        <div class="col">
+            <input type="hidden" th:field="*{patientId}"/>
+        </div>
+
+    </div>
+</form>
+
+
+
+<!-- footer starts here -->
+<div th:insert="~{common/footer :: footer}"></div>
+
+
+<script>
+
+    // Below code sets format to the
+    // datetimepicker having id as
+    // datetime
+    // $('#datetime').datetimepicker({
+    //     format: 'DD-MM-YYYY HH:mm:ss'
+    // });
+</script>
+
+</body>
+</html>

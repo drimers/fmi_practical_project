@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{common/header :: homeHeader}"></div>
+<!--</head>-->
+<body class="d-flex flex-column min-vh-100">
+<!--/*@thymeleaf id="doctor" type="com.stefanpetkov.medical.commands.DoctorCommand"*/-->
+<div th:replace="~{common/header :: homeNavbar}"></div>
+
+<div>
+    </br>
+</div>
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <form class="card-body" th:object="${doctor}" th:action="@{/registerDoctor}" method="post">
+
+                    <!--     class named "container" is assigned to div -->
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                        <p th:text="#{doctor.hasErrors}">Error Message</p>
+                    </div>
+                    <div class="text-center" th:if="${param.success}">
+                        <div class="alert alert-info">
+                            You have successfully registered!!!
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <h3 class="text-center">Doctor Register Form</h3>
+                        <div class="form-group mb-3">
+                            <label for="uniqueID"><b>Unique ID</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Unique ID"
+                                    name="uniqueID"
+                                    id="uniqueID"
+                                    minlength="10"
+                                    maxlength="10"
+                                    th:field="${doctor.doctorUniqueID}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorUniqueID')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorUniqueID}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="firstName"><b>First Name</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter First Name"
+                                    name="username"
+                                    id="firstName"
+                                    th:field="${doctor.doctorFirstName}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorFirstName')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorFirstName}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="LastName"><b>Last Name</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Last Name"
+                                    name="LastName"
+                                    id="LastName"
+                                    th:field="${doctor.doctorLastName}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorLastName')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorLastName}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="specialty"><b>Specialty</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter specialty"
+                                    name="specialty"
+                                    id="specialty"
+                                    th:field="${doctor.doctorSpecialty}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorSpecialty')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorSpecialty}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone"><b>Phone</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Phone Number"
+                                    name="phone"
+                                    id="phone"
+                                    th:field="${doctor.doctorPhone}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorPhone')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorPhone}"></p>
+                        </div>
+                        <!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        https://www.w3schools.com/tags/att_input_pattern.asp -->
+                        <label for="email"><b>Email</b></label>
+                        <input class="form-control"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                               type="email"
+                               placeholder="name@example.com"
+                               name="email"
+                               id="email"
+                               th:field="${doctor.doctorEmail}"
+                        />
+                        <p th:if="${#fields.hasErrors('doctorEmail')}" class="alert alert-danger"
+                           th:errors="${doctor.doctorEmail}"></p>
+                        <div class="form-group mb-3">
+                            <label for="pwd"><b>Password</b></label>
+                            <input
+                                    class="form-control"
+                                    type="text"
+                                    placeholder="Enter Password"
+                                    name="pwd"
+                                    id="pwd"
+                                    th:field="${doctor.doctorPassword}"
+                            />
+                            <p th:if="${#fields.hasErrors('doctorPassword')}" class="alert alert-danger"
+                               th:errors="${doctor.doctorPassword}"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="comment"><b>Description</b></label>
+                            <textarea class="form-control" id="comment" th:field="${doctor.doctorDescription}"
+                                      rows="3"></textarea>
+                        </div>
+                        <div class="form-group mb-3 text-center">
+                            <button type="submit">Save</button>
+                        </div>
+                        <div class="text-center">
+                            <p>Go to admin page <a href="/admin">Admin page</a>.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    </br></br>
+</div>
+<div th:replace="~{common/footer :: footer}"></div>
+
+<script type="text/javascript">
+    const pwd = Math.random().toString();
+    document.getElementById("pwd").innerText = pwd;
+</script>
+
+
+</body>
+</html>
