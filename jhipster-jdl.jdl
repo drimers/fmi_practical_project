@@ -1,0 +1,78 @@
+entity BaseUser{
+	id Long
+}
+
+
+entity Patient{
+	patientId BaseUser,
+	firstName String,
+	lastName String,
+    phone String,
+    comment String
+    appointment Appointment
+}
+
+entity Doctor {
+	doctorId BaseUser,
+	firstName String,
+	lastName String,
+    phone String,
+    appointment Appointment
+    workingdays WorkingDay
+}
+
+enum Role {
+	PATIENT, DOCTOR, ADMIN
+}
+
+entity Credentials {
+	credentialsId Long,
+	email String,
+	password String,
+	role UserRole
+}
+
+entity Appointment {
+	appointmentId Long,
+    dateTimeOfTheAppointment DateTimeFormat,
+    patient Patient
+    doctor Doctor
+}
+
+entity DoctorWorkingDay {
+	workingDayId Long,
+    workingDay String,
+    startTimeOpeningHour DateTimeFormat,
+    endTimeOfWorkingHour DateTimeFormat,
+    isBookedHour Boolean,
+    doctor Doctor
+}
+
+entity PatientMedicalCard {
+	medicalCardId Long,
+    nodes String,
+    patient Patient,
+	doctor Doctor
+    appointment Appointment
+}
+
+
+relationship OneToOne {
+	BaseUser to Patient
+    BaseUser to Doctor
+	Patient{credentials(credentialsId)} to Credentials{patient(patientId)}
+	//Credentials{patient(patientId)} to Patient{credentials(credentialsId)}
+	Doctor{credentials(credentialsId)} to Credentials{doctor(doctorId)}
+	//Credentials{doctor(doctorId)} to Doctor{credentials(credentialsId)}
+    PatientMedicalCard{appointment(appointmentId)} to Appointment{patientMedicalCard(medicalCardId)}
+}
+
+relationship OneToMany {
+	Patient{appointmentList(appointmentId)} to Appointment{patient(patientId)}
+	Doctor{appointmentList(appointmentId)} to Appointment{doctor(doctorId)}
+    Doctor{workingDayList(appointmentId)} to DoctorWorkingDay{doctor(doctorId)}
+    Patient{medicalExaminationsList(medicalCardId)} to PatientMedicalCard{patient(patientId)}
+    Doctor{medicalExaminationsList(medicalCardId)} to PatientMedicalCard{doctor(doctorId)}
+}
+
+

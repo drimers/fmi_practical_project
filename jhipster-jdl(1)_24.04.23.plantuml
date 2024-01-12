@@ -1,0 +1,73 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ApplicationUserRole {
+   PATIENT: 
+   DOCTOR: 
+   ADMIN: 
+}
+class Appointment {
+   appointmentId: Long
+   dateTimeOfTheAppointment: DateTimeFormat
+   patient: Patient
+   doctor: Doctor
+}
+class BaseUser {
+   id: Long
+   credentials: UserCredentials
+}
+class Doctor {
+   doctorId: BaseUser
+   firstName: String
+   lastName: String
+   phone: String
+   appointment: Appointment
+   workingdays: WorkingDay
+}
+class DoctorWorkingDay {
+   workingDayId: Long
+   workingDay: String
+   startTimeOpeningHour: DateTimeFormat
+   endTimeOfWorkingHour: DateTimeFormat
+   isBookedHour: Boolean
+   doctor: Doctor
+}
+class Patient {
+   patientId: BaseUser
+   firstName: String
+   lastName: String
+   phone: String
+   comment: String
+   appointment: Appointment
+}
+class PatientMedicalCard {
+   medicalCardId: Long
+   nodes: String
+   patient: Patient
+   doctor: Doctor
+   appointment: Appointment
+}
+class UserCredentials {
+   credentialsId: Long
+   email: String
+   password: String
+   applicationUserRole: ApplicationUserRole
+   baseUser: BaseUser
+}
+
+BaseUser            "1" <-[#595959,plain]-> "1" Doctor              
+BaseUser            "1" <-[#595959,plain]-> "1" Patient             
+Doctor              "*" <-[#595959,plain]-* "1" Appointment         
+Doctor              "*" <-[#595959,plain]-* "1" DoctorWorkingDay    
+Doctor              "*" <-[#595959,plain]-* "1" PatientMedicalCard  
+Doctor              "1" <-[#595959,plain]-> "1" UserCredentials     
+Patient             "*" <-[#595959,plain]-* "1" Appointment         
+Patient             "*" <-[#595959,plain]-* "1" PatientMedicalCard  
+Patient             "1" <-[#595959,plain]-> "1" UserCredentials     
+PatientMedicalCard  "1" <-[#595959,plain]-> "1" Appointment         
+UserCredentials      -[#595959,dashed]->  ApplicationUserRole 
+UserCredentials     "1" <-[#595959,plain]-> "1" BaseUser            
+@enduml

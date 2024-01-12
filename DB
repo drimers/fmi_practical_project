@@ -1,0 +1,70 @@
+application {
+  config {
+    baseName MyMedicalWeb,
+    applicationType monolith,
+    packageName stefan.petkov,
+    authenticationType jwt,
+    prodDatabaseType mysql,
+    clientFramework react
+  }
+  entities *
+}
+
+entity Patient {
+	patientId Long,
+	firstName String,
+	lastName String,
+    phone String,
+    profilePicture String
+}
+
+entity Doctor {
+	doctorId Long,
+	firstName String,
+	lastName String,
+    phone String,
+    profilePicture String
+}
+
+enum Role {
+	PATIENT, DOCTOR, ADMIN
+}
+
+entity Credentials {
+	credentialsId Long,
+	email String,
+	password String,
+	role UserRole
+}
+
+entity Appointment {
+	appointmentId Long,
+    appointmentDate String,
+	appointmentStartTime String,
+    appointmentEndTime String,
+    appointmentComment String
+}
+
+entity WorkingDay {
+	workingDayId Long,
+    workingDay String,
+    startTime String,
+    endTime String
+}
+
+
+relationship OneToOne {
+	Patient{credentials(credentialsId)} to Credentials{patient(patientId)}
+	//Credentials{patient(patientId)} to Patient{credentials(credentialsId)}
+	Doctor{credentials(credentialsId)} to Credentials{doctor(doctorId)}
+	//Credentials{doctor(doctorId)} to Doctor{credentials(credentialsId)}
+}
+
+relationship OneToMany {
+	Patient{appointmentList(appointmentId)} to Appointment{patient(patientId)}
+	Doctor{appointmentList(appointmentId)} to Appointment{doctor(doctorId)}
+    Doctor{workingDayList(appointmentId)} to WorkingDay{doctor(doctorId)}
+}
+
+
+33dd701d-b85c-42a1-8e3b-eaeee2e68a94

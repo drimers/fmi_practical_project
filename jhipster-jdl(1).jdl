@@ -1,0 +1,81 @@
+entity BaseUser{
+	id Long
+    credentials UserCredentials 
+}
+
+
+entity Patient{
+	patientId BaseUser,
+	firstName String,
+	lastName String,
+    phone String,
+    comment String
+    appointment Appointment
+}
+
+entity Doctor {
+	doctorId BaseUser,
+	firstName String,
+	lastName String,
+    phone String,
+    appointment Appointment
+    workingdays WorkingDay
+}
+
+enum ApplicationUserRole {
+	PATIENT, DOCTOR, ADMIN
+}
+
+entity UserCredentials {
+	credentialsId Long,
+	email String,
+	password String,
+	applicationUserRole ApplicationUserRole 
+    baseUser BaseUser 
+}
+
+entity Appointment {
+	appointmentId Long,
+    dateTimeOfTheAppointment DateTimeFormat,
+    patient Patient
+    doctor Doctor
+}
+
+entity DoctorWorkingDay {
+	workingDayId Long,
+    workingDay String,
+    startTimeOpeningHour DateTimeFormat,
+    endTimeOfWorkingHour DateTimeFormat,
+    isBookedHour Boolean,
+    doctor Doctor
+}
+
+entity PatientMedicalCard {
+	medicalCardId Long,
+    nodes String,
+    patient Patient,
+	doctor Doctor
+    appointment Appointment
+}
+
+
+relationship OneToOne {
+	BaseUser to Patient
+    BaseUser to Doctor
+	Patient{userCredentials(credentialsId)} to UserCredentials{patient(patientId)}
+	//Credentials{patient(patientId)} to Patient{credentials(credentialsId)}
+	Doctor{userCredentials(credentialsId)} to UserCredentials{doctor(doctorId)}
+    UserCredentials{baseUser(id)} to BaseUser{userCredentials(credentialsId)}
+	//Credentials{doctor(doctorId)} to Doctor{credentials(credentialsId)}
+    PatientMedicalCard{appointment(appointmentId)} to Appointment{patientMedicalCard(medicalCardId)}
+}
+
+relationship OneToMany {
+	Patient{appointmentList(appointmentId)} to Appointment{patient(patientId)}
+	Doctor{appointmentList(appointmentId)} to Appointment{doctor(doctorId)}
+    Doctor{workingDayList(appointmentId)} to DoctorWorkingDay{doctor(doctorId)}
+    Patient{medicalExaminationsList(medicalCardId)} to PatientMedicalCard{patient(patientId)}
+    Doctor{medicalExaminationsList(medicalCardId)} to PatientMedicalCard{doctor(doctorId)}
+}
+
+
