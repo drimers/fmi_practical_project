@@ -15,4 +15,15 @@ https://github.com/wdkeyser02/SpringBootSecurityFullTutorial/blob/part01/SpringB
 https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
 https://howtodoinjava.com/java/date-time/calculate-business-days/
 ```
-![](src/main/resources/static/img/slide-one.jpg)
+#### Home view
+![](snapshots/home_page.png)
+
+#### Patient view
+![](snapshots/patient.png)
+
+#### Doctor view
+![](snapshots/doctor.png)
+
+#### Contact form view
+![](snapshots/contact.png)
+
