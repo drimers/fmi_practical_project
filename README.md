@@ -1,5 +1,10 @@
 ## University practical project.
 
+- [spring-security-samples](https://github.com/spring-projects/spring-security-samples/tree/main/servlet/java-configuration/hello-mvc-security/src/main/java/example)
+- [SpringBootSecurityFullTutorial](https://github.com/wdkeyser02/SpringBootSecurityFullTutorial/blob/part01/SpringBootSecurityFullTutorial/src/main/java/willydekeyser/config/SecurityConfig.java)
+- [sending-email-via-smtp](https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/)
+- [calculate-business-days](https://howtodoinjava.com/java/date-time/calculate-business-days/)
+
 ```
 https://github.com/spring-projects/spring-security-samples/tree/main/servlet/java-configuration/hello-mvc-security/src/main/java/example
 https://www.youtube.com/watch?v=WZfnASt4E34
@@ -7,3 +12,4 @@ https://github.com/wdkeyser02/SpringBootSecurityFullTutorial/blob/part01/SpringB
 https://www.geeksforgeeks.org/spring-boot-sending-email-via-smtp/
 https://howtodoinjava.com/java/date-time/calculate-business-days/
 ```
+![](src/main/resources/static/img/slide-one.jpg)
